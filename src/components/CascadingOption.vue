@@ -1,9 +1,9 @@
 <template>
   <li
-    class="h-selector-option"
+    class="cascading-selector-option"
     @click="handleOptionClick"
   >
-    <slot>{{ value }}</slot>
+    <slot />
   </li>
 </template>
 
@@ -12,14 +12,25 @@
         name: "CascadingOption",
         props: {
             value: {
-                type: [String,Number],
+                type: Object,
                 required: true
             }
         },
         methods: {
           handleOptionClick() {
-            this.$emit('handleOptionClick', this.value);
+            this.$emit('handleOptionClick');
           }
         }
     };
 </script>
+
+<style lang="scss" scoped>
+.cascading-selector-option {
+  line-height: 60px;
+  height: 60px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
