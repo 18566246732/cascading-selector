@@ -1,6 +1,7 @@
 <template>
   <li
     class="cascading-selector-option"
+    :class="value.isActive ? 'active': ''"
     @click="handleOptionClick"
   >
     <slot />
@@ -18,7 +19,7 @@
         },
         methods: {
           handleOptionClick() {
-            this.$emit('handleOptionClick');
+            this.$parent.$emit('handleOptionClick', this.value);
           }
         }
     };
@@ -32,5 +33,9 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.active {
+  color: $primary-color;
 }
 </style>

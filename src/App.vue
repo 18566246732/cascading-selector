@@ -3,8 +3,6 @@
     <cascading-selector
       v-model="address"
       :show-value="showAddress"
-      :show="isShow"
-      @changeSelected="hanldeSelectChanged"
     >
       <cascading-wrapper
         prop="province"
@@ -13,7 +11,6 @@
           v-for="item in provinceList"
           :key="item.id"
           :value="item"
-          @handleOptionClick="handleProvinceSelect(item)"
         >
           {{ item.name }}
         </cascading-option>
@@ -22,10 +19,9 @@
         prop="city"
       >
         <cascading-option
-          v-for="item in address.province.cities"
+          v-for="item in address.province.cityArray"
           :key="item.id"
           :value="item"
-          @handleOptionClick="handleCitySelect(item)"
         >
           {{ item.name }}
         </cascading-option>
@@ -34,10 +30,9 @@
         prop="country"
       >
         <cascading-option
-          v-for="item in address.city.countries"
+          v-for="item in address.city.countryArray"
           :key="item.id"
           :value="item"
-          @handleOptionClick="handleCountrySelect(item)"
         >
           {{ item.name }}
         </cascading-option>
@@ -66,20 +61,19 @@ export default {
             province: {
               name: '',
               id: '',
-              cities: []
+              cityArray: []
             },
             city: {
               name: '',
               id: '',
-              countries: []
+              countryArray: []
             },
             country: {
               name: '',
               id: '',
             }
         },
-        provinceList: [],
-        isShow: false
+        provinceList: []
       };
   },
   computed: {
@@ -94,24 +88,22 @@ export default {
     this.provinceList = areaData.provinces;
   },
   methods: {
-    handleProvinceSelect(item) {
-      this.address.province = item;
-      this.handleCitySelect(this.address.province.cities[0]);
-      this.handleCountrySelect(this.address.city.countries[0]);
-    },
-    handleCitySelect(item) {
-      this.address.city = item;
-      this.handleCountrySelect(this.address.city.countries[0]);
-    },
-    handleCountrySelect(item) {
-      this.address.country = item;
-    },
-    hanldeSelectChanged(type, value) {
-      this.address[type] = value;
-      const fnName = `handle${String(type).charAt(0).toUpperCase() + String(type).slice(1)}Select`;
-      this[fnName](value);
-
-    }
+    // handleProvinceSelect(item) {
+    //   this.address.province = item;
+    //   this.handleCitySelect(this.address.province.cityArray[0]);
+    //   this.handleCountrySelect(this.address.city.countryArray[0]);
+    // },
+    // handleCitySelect(item) {
+    //   this.address.city = item;
+    //   this.handleCountrySelect(this.address.city.countryArray[0]);
+    // },
+    // handleCountrySelect(item) {
+    //   this.address.country = item;
+    // },
+    // hanldeSelectChanged(type, value) {
+    //   const fnName = `handle${String(type).charAt(0).toUpperCase() + String(type).slice(1)}Select`;
+    //   this[fnName](value);
+    // }
   }
 };
 </script>

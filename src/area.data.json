@@ -3,11 +3,11 @@
     {
       "name": "四川",
       "id": "sichuan",
-      "cities": [
+      "cityArray": [
         {
           "name": "泸州",
           "id": "sichuan_luzhou",
-          "countries": [
+          "countryArray": [
             {
               "name": "叙永",
               "id": "sichuan_luzhou_xuyong"
@@ -27,11 +27,11 @@
     {
       "name": "贵州",
       "id": "guizhou",
-      "cities": [
+      "cityArray": [
         {
           "name": "遵义",
           "id": "guizhou_zunyi",
-          "countries": [
+          "countryArray": [
             {
               "name": "桐梓",
               "id": "guizhou_zunyi_tongzi"
@@ -49,7 +49,7 @@
         {
           "name": "贵阳",
           "id": "guizhou_guiyang",
-          "countries": [
+          "countryArray": [
             {
               "name": "开阳",
               "id": "guizhou_guiyang_kaiyang"
@@ -69,11 +69,11 @@
     {
       "name": "江苏",
       "id": "jiangsu",
-      "cities": [
+      "cityArray": [
         {
           "name": "南京",
           "id": "jiangsu_nanjing",
-          "countries": [
+          "countryArray": [
             {
               "name": "玄武",
               "id": "jiangsu_nanjing_xuanwu"
@@ -103,7 +103,7 @@
         {
           "name": "苏州",
           "id": "jiangsu_suzhou",
-          "countries": [
+          "countryArray": [
             {
               "name": "姑苏",
               "id": "jiangsu_suzhou_gusu"

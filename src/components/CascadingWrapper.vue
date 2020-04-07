@@ -1,19 +1,8 @@
 <template>
-  <!-- 包裹级联选择器的容器，限制高度，并设置overflow: hidden;
-  高度使用数据的方式动态修改-->
   <div
     class="cascading-selector-wrapper"
     :style="{height: parentHeight+'px'}"
   >
-    <!-- 级联选择器的真实节点，无序列表
-             ref属性用来获取真实的DOM节点
-             style通过数据去设置样式
-             监听需要用到的事件
-             touchstart  触摸开始
-             touchmove  触摸移动
-             touchend  触摸结束
-             transitionend  过渡结束
-    -->
     <ul
       ref="wrapper"
       class="cascading-list"
@@ -23,7 +12,7 @@
       @touchend="touchEnd($event)"
       @transitionend="transitionEnd($event)"
     >
-      <!-- 使用四个空的option来保证可选项的位置，无需动态的通过js修改 -->
+      <!-- 使用空的option来保证可选项的位置 -->
       <li class="cascading-selector-option" />
       <li class="cascading-selector-option">
         {{ prop }}
@@ -45,10 +34,8 @@ export default {
       required: true
     }
   },
-  // 定义初始化数据
   data() {
     return {
-      // 初始化样式
       style: {
         transform: "translate3d(0px,0px,0px)",
         transition: "transform .3s"
@@ -68,57 +55,45 @@ export default {
       preventFormat: false // 阻止格式化距离
     };
   },
-  // 计算属性
   computed: {
     // 得到父组件中，当前级联选择器所绑定的那一条数据
     propValue() {
       return this.$parent.value[this.prop];
-    },
+    }
   },
-  // 侦听器
   watch: {
     // 侦听activeIndex的变化
     activeIndex(newValue) {
       // 当activeIndex发生变化，并且可以通过这个新的索引找到对应子组件时
       if (this.$children[newValue]) {
-        // 调用父组件的$emit方法，发布changeSelected事件
-        // 将当前绑定的属性和当前的值发布出去
-        // 由于父组件的mounted函数中，使用$on订阅了这个事件
-        // 所以父组件能够正确的收到通信
-        this.$parent.$emit(
-          "changeSelected",
-          this.prop,
-          this.$children[newValue].value
-        );
+        this.$parent.$emit( "changeSelected", this.prop, this.$children[newValue].value);
       }
     },
     // 侦听当前级联选择器的数据
     propValue(newValue) {
       // 当数据发生改变的时候，向外发布change事件，并将新的值发布在外
       this.$emit("change", newValue);
-      // 重置当前级联选择器的位置
       this.formatAddress();
     }
   },
-  // 实例挂载完成
   mounted() {
-    // 调用Vue的$nextTick方法，在下一次DOM刷新完成之后调用方法
-    this.$nextTick(() => {
-      // 重置数据
-      this.formatData();
-      // 重置当前级联选择器的位置
-      this.formatAddress();
+
+    this.$on('handleOptionClick', (value) => {
+      this.$parent.$emit("changeSelected", this.prop, value);
     });
-    // 由于是移动端的demo、所以顺便订阅resize事件，当屏幕大小发生改变的时候再次重置选择器
+
+
+    this.formatData();
+    this.formatAddress();
+
+    // 屏幕大小发生改变的时候再次重置选择器
     window.addEventListener("resize", () => {
       this.formatData();
       this.formatAddress();
     });
   },
   updated() {
-    // 重置数据
     this.formatData();
-    // 重置当前级联选择器的位置
     this.formatAddress();
   },
   methods: {
@@ -148,11 +123,12 @@ export default {
       // 将索引值赋予activeIndex，如果能查找到对应的，说明外部传值了，
       // 就自动滑动到当前索引的位置，否则就显示请选择
       this.activeIndex = index > -1 ? index : -1;
-      !this.preventFormat && this.move(- this.activeIndex);
+      !this.preventFormat && this.move(-this.activeIndex);
     },
     // 通过索引值与当前option的高度计算距离，并执行动画
     move(activeIndex) {
-      this.style.transform = `translate3d(0px, ${activeIndex * this.optionHeight}px, 0px)`;
+      this.style.transform = `translate3d(0px, ${activeIndex *
+        this.optionHeight}px, 0px)`;
     },
     // 触碰开始
     touchStart(e) {
@@ -173,7 +149,8 @@ export default {
       // 保存当前移动的方向，往下拉的话，moveY - this.startY为正，往上拉的话为负
       this.direction = moveY - this.startY;
       // 设置拖拽移动
-      this.style.transform = `translate3d(0px,${this.prevY + this.direction}px,0px)`;
+      this.style.transform = `translate3d(0px,${this.prevY +
+        this.direction}px,0px)`;
     },
     // 触碰结束
     touchEnd(e) {
@@ -196,11 +173,13 @@ export default {
       // 大于0 为向下拉
       if (this.direction > 0) {
         // 通过距离来计算最新的坐标索引
-        activeIndex = this.activeIndex - Math.round(distance / this.optionHeight);
+        activeIndex =
+          this.activeIndex - Math.round(distance / this.optionHeight);
         //  小于 0 为向上拉
       } else if (this.direction < 0) {
         // 通过距离来计算最新的坐标索引
-        activeIndex = this.activeIndex + Math.round(distance / this.optionHeight);
+        activeIndex =
+          this.activeIndex + Math.round(distance / this.optionHeight);
       }
       // 判断当前移动距离特别小，判定为触碰事件，而不是滑动
       if (distance <= 1) {
@@ -216,15 +195,12 @@ export default {
         activeIndex < 0
           ? 0
           : activeIndex > this.optionLength - 1
-            ? this.optionLength - 1
-            : activeIndex;
+          ? this.optionLength - 1
+          : activeIndex;
 
       // 执行判断并赋值索引
       this.activeIndex = activeIndex;
-
-
-      this.move(- this.activeIndex);
-
+      this.move(-this.activeIndex);
     },
     // 过渡结束
     transitionEnd() {
