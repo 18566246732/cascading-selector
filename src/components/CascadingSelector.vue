@@ -17,8 +17,8 @@
 
       <div class="casecading-selector__action">
         <div
-          class="cancel btn"
-          @click="cancel"
+          class="clear btn"
+          @click="clear"
         >
           清空
         </div>
@@ -58,7 +58,7 @@ export default {
     this.initialValue = this.$helper.deepClone(this.value);
   },
   methods: {
-    cancel() {
+    clear() {
       this.show = false;
       this.$emit("input", this.$helper.deepClone(this.initialValue));
     },
@@ -159,7 +159,7 @@ $casecading-selector-height: 30px;
       margin: 5px 10px;
       padding: 0 20px;
     }
-    .cancel {
+    .clear {
       color: grey;
     }
     .confirm {

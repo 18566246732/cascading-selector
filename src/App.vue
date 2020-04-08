@@ -4,7 +4,7 @@
       v-model="address"
       :show-value="showAddress"
     >
-      <cascading-wrapper
+      <cascading-column
         prop="province"
       >
         <cascading-option
@@ -14,8 +14,8 @@
         >
           {{ item.name }}
         </cascading-option>
-      </cascading-wrapper>
-      <cascading-wrapper
+      </cascading-column>
+      <cascading-column
         prop="city"
       >
         <cascading-option
@@ -25,8 +25,8 @@
         >
           {{ item.name }}
         </cascading-option>
-      </cascading-wrapper>
-      <cascading-wrapper
+      </cascading-column>
+      <cascading-column
         prop="country"
       >
         <cascading-option
@@ -36,14 +36,14 @@
         >
           {{ item.name }}
         </cascading-option>
-      </cascading-wrapper>
+      </cascading-column>
     </cascading-selector>
   </div>
 </template>
 
 <script>
 import CascadingSelector from "./components/CascadingSelector";
-import CascadingWrapper from "./components/CascadingWrapper";
+import CascadingColumn from "./components/CascadingColumn";
 import CascadingOption from "./components/CascadingOption";
 
 import areaData from "./area.data.json";
@@ -52,7 +52,7 @@ export default {
   name: 'App',
   components: {
     CascadingSelector,
-    CascadingWrapper,
+    CascadingColumn,
     CascadingOption
   },
   data() {
