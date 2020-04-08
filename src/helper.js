@@ -7,12 +7,12 @@ export default {
     * @param { Number } 要滚动到的指定位置
     * @param { Number } 每次垂直滚动的幅度
     */
-  scrollTo(dom, index, SCROLL_STEP) {
-    if (dom, index > 0) {
+  scrollTo(dom, x, y) {
+    if (dom) {
       if (dom.scrollTo) {
-        dom.scrollTo(0, index * SCROLL_STEP);
+        dom.scrollTo(x, y);
       } else if (dom.scrollTop) {
-        dom.scrollTop = index * SCROLL_STEP;
+        dom.scrollTop = y;
       }
     }
   },
@@ -32,5 +32,29 @@ export default {
         canRun = true;
       }, interval);
     };
+  },
+  /**
+   * 动画垂直滚动到页面指定位置
+   *
+   * @param { HTMLElement } dom 滚动对象
+   * @param { Number } currentY 当前位置
+   * @param { Number } targetY 目标位置
+   */
+  scrollAnimation(dom, currentY, targetY) {
+    // 计算需要移动的距离
+    let needScrollTop = targetY - currentY;
+    let _currentY = currentY;
+    setTimeout(() => {
+      // 一次调用滑动帧数，每次调用会不一样
+      const dist = Math.ceil(needScrollTop / 10);
+      _currentY += dist;
+      this.scrollTo(dom, _currentY, currentY);
+      // 如果移动幅度小于十个像素，直接移动，否则递归调用，实现动画效果
+      if (needScrollTop > 10 || needScrollTop < -10) {
+        this.scrollAnimation(dom, _currentY, targetY);
+      } else {
+        this.scrollTo(dom, _currentY, targetY);
+      }
+    }, 5);
   }
 };

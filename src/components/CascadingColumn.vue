@@ -160,9 +160,7 @@ export default {
         this.style.transform = `translate3d(0px, ${distance}px, 0px)`;
         return;
       }
-      console.log(this.activeIndex + 1, 'activeIndex');
-
-      this.$helper.scrollTo(this.$refs['column'], this.activeIndex + 1, this.optionHeight );
+      this.$helper.scrollAnimation(this.$refs['column'], this.$refs['column'].scrollTop, this.optionHeight * (this.activeIndex + 1));
     },
     // 触碰开始
     handleColumnTouchStart(e) {
@@ -189,8 +187,6 @@ export default {
       this.endY = e.changedTouches[0].pageY;
       // 保存上一次移动的距离
       this.prevY = this.style.transform.split(",")[1].slice(0, -2) * 1;
-      // 计算当前移动到的位置索引
-      let activeIndex = -Math.round(this.prevY / this.optionHeight);
       // 计算当前手指从触碰开始到结束移动的距离
       const distance = Math.abs(this.endY - this.startY);
 
