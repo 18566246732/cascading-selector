@@ -86,24 +86,6 @@ export default {
   },
   mounted() {
     this.provinceList = areaData.provinces;
-  },
-  methods: {
-    // handleProvinceSelect(item) {
-    //   this.address.province = item;
-    //   this.handleCitySelect(this.address.province.cityArray[0]);
-    //   this.handleCountrySelect(this.address.city.countryArray[0]);
-    // },
-    // handleCitySelect(item) {
-    //   this.address.city = item;
-    //   this.handleCountrySelect(this.address.city.countryArray[0]);
-    // },
-    // handleCountrySelect(item) {
-    //   this.address.country = item;
-    // },
-    // hanldeSelectChanged(type, value) {
-    //   const fnName = `handle${String(type).charAt(0).toUpperCase() + String(type).slice(1)}Select`;
-    //   this[fnName](value);
-    // }
   }
 };
 </script>

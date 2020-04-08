@@ -14,8 +14,8 @@
     >
       <!-- 使用空的option来保证可选项的位置 -->
       <li class="cascading-selector-option" />
-      <li class="cascading-selector-option">
-        {{ prop }}
+      <li class="cascading-selector-option title">
+        {{ prop | translateToChinese }}
       </li>
       <slot />
       <li class="cascading-selector-option" />
@@ -27,6 +27,16 @@
 <script>
 export default {
   name: "CascadingWrapper",
+  filters: {
+    translateToChinese(prop) {
+      const E2CMap = {
+        province: "省",
+        city: "市",
+        country: "区/县"
+      };
+      return E2CMap[prop];
+    }
+  },
   // 接收prop数据，表示需要操作父组件中value对象上的某个指定数据
   props: {
     prop: {
@@ -66,7 +76,10 @@ export default {
     activeIndex(newValue) {
       // 当activeIndex发生变化，并且可以通过这个新的索引找到对应子组件时
       if (this.$children[newValue]) {
+        this.resetActiveFlag(this.$children[newValue].value);
         this.$parent.$emit( "changeSelected", this.prop, this.$children[newValue].value);
+      } else {
+        this.resetActiveFlag();
       }
     },
     // 侦听当前级联选择器的数据
@@ -79,6 +92,7 @@ export default {
   mounted() {
 
     this.$on('handleOptionClick', (value) => {
+      this.resetActiveFlag(value);
       this.$parent.$emit("changeSelected", this.prop, value);
     });
 
@@ -97,6 +111,13 @@ export default {
     this.formatAddress();
   },
   methods: {
+    // 重置isActive的标识位
+    resetActiveFlag(activeValue) {
+      this.$children.forEach(child => child.value.isActive = false);
+      if (activeValue) {
+        activeValue.isActive = true;
+      }
+    },
     // 重置数据的方法
     formatData() {
       // 保存当前的子组件，使用this.$children获取到的是当前组件所有的子组件（子Vue实例）
@@ -227,6 +248,10 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  &.title {
+    font-size: 14px;
+    color: gray;
+  }
 }
 
 .cascading-list {

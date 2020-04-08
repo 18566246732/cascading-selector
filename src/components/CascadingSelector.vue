@@ -55,10 +55,12 @@ export default {
   },
   mounted() {
     this.$on('changeSelected', this.handleChangeSelected);
+    this.initialValue = this.$helper.deepClone(this.value);
   },
   methods: {
     cancel() {
       this.show = false;
+      this.$emit("input", this.$helper.deepClone(this.initialValue));
     },
     confirm() {
       this.show = false;

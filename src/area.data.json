@@ -3,21 +3,26 @@
     {
       "name": "四川",
       "id": "sichuan",
+      "isActive": false,
       "cityArray": [
         {
           "name": "泸州",
+          "isActive": false,
           "id": "sichuan_luzhou",
           "countryArray": [
             {
               "name": "叙永",
+              "isActive": false,
               "id": "sichuan_luzhou_xuyong"
             },
             {
               "name": "古蔺",
+              "isActive": false,
               "id": "sichuan_luzhou_gulin"
             },
             {
               "name": "泸县",
+              "isActive": false,
               "id": "sichuan_luzhou_luxian"
             }
           ]
@@ -26,40 +31,49 @@
     },
     {
       "name": "贵州",
+      "isActive": false,
       "id": "guizhou",
       "cityArray": [
         {
           "name": "遵义",
+          "isActive": false,
           "id": "guizhou_zunyi",
           "countryArray": [
             {
               "name": "桐梓",
+              "isActive": false,
               "id": "guizhou_zunyi_tongzi"
             },
             {
               "name": "绥阳",
+              "isActive": false,
               "id": "guizhou_zunyi_zuiyang"
             },
             {
               "name": "正安",
+              "isActive": false,
               "id": "guizhou_zunyi_zhengan"
             }
           ]
         },
         {
           "name": "贵阳",
+          "isActive": false,
           "id": "guizhou_guiyang",
           "countryArray": [
             {
               "name": "开阳",
+              "isActive": false,
               "id": "guizhou_guiyang_kaiyang"
             },
             {
               "name": "息烽",
+              "isActive": false,
               "id": "guizhou_guiyang_xifeng"
             },
             {
               "name": "修文",
+              "isActive": false,
               "id": "guizhou_guiyang_xiuwen"
             }
           ]
@@ -68,52 +82,64 @@
     },
     {
       "name": "江苏",
+      "isActive": false,
       "id": "jiangsu",
       "cityArray": [
         {
           "name": "南京",
+          "isActive": false,
           "id": "jiangsu_nanjing",
           "countryArray": [
             {
               "name": "玄武",
+              "isActive": false,
               "id": "jiangsu_nanjing_xuanwu"
             },
             {
               "name": "鼓楼",
+              "isActive": false,
               "id": "jiangsu_nanjing_gulou"
             },
             {
               "name": "秦淮",
+              "isActive": false,
               "id": "jiangsu_nanjing_qinhuai"
             },
             {
               "name": "玄武",
+              "isActive": false,
               "id": "jiangsu_nanjing_xuanwu1"
             },
             {
               "name": "鼓楼",
+              "isActive": false,
               "id": "jiangsu_nanjing_gulou2"
             },
             {
               "name": "秦淮",
+              "isActive": false,
               "id": "jiangsu_nanjing_qinhuai3"
             }
           ]
         },
         {
           "name": "苏州",
+          "isActive": false,
           "id": "jiangsu_suzhou",
           "countryArray": [
             {
               "name": "姑苏",
+              "isActive": false,
               "id": "jiangsu_suzhou_gusu"
             },
             {
               "name": "虎丘",
+              "isActive": false,
               "id": "jiangsu_suzhou_huqiu"
             },
             {
               "name": "吴中",
+              "isActive": false,
               "id": "jiangsu_suzhou_wuzhong"
             }
           ]
