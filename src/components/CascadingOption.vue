@@ -27,8 +27,8 @@
 
 <style lang="scss" scoped>
 .cascading-selector-option {
-  line-height: 60px;
-  height: 60px;
+  line-height: $base-brick-height;
+  height: $base-brick-height;
   text-align: center;
   white-space: nowrap;
   text-overflow: ellipsis;

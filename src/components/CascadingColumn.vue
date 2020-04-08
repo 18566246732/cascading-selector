@@ -1,14 +1,17 @@
 <template>
-  <div
+  <!-- <div
     class="cascading-selector-column"
     :style="{height: parentHeight+'px'}"
+  > -->
+  <div
+    class="cascading-selector-column"
   >
     <div
       class="outer-cascading-list"
       :class="isMobile ? 'mobile' : ''"
     >
       <ul
-        ref="column"
+        :ref="prop"
         class="inner-cascading-list"
         :style="style"
         @touchstart="handleColumnTouchStart"
@@ -23,6 +26,9 @@
           {{ prop | translateToChinese }}
         </li>
         <slot />
+        <li class="cascading-selector-option" />
+        <li class="cascading-selector-option" />
+        <li class="cascading-selector-option" />
         <li class="cascading-selector-option" />
         <li class="cascading-selector-option" />
       </ul>
@@ -135,7 +141,7 @@ export default {
       // 保存当前选项的长度
       this.optionLength = this.$children.length;
       // 保存当前option的高度
-      this.optionHeight = this.$refs["column"].children[0].offsetHeight;
+      this.optionHeight = this.$refs[this.prop].children[0].offsetHeight;
       // 为最外层的父元素设置高度，高度为option的5倍，即一次显示5个option
       this.parentHeight = this.optionHeight * 5;
       // 保存滑动的最大高度
@@ -160,7 +166,7 @@ export default {
         this.style.transform = `translate3d(0px, ${distance}px, 0px)`;
         return;
       }
-      this.$helper.scrollAnimation(this.$refs['column'], this.$refs['column'].scrollTop, this.optionHeight * (this.activeIndex + 1));
+      this.$helper.scrollAnimation(this.$refs[this.prop], this.$refs[this.prop].scrollTop, this.optionHeight * (this.activeIndex + 1));
     },
     // 触碰开始
     handleColumnTouchStart(e) {
@@ -254,8 +260,8 @@ export default {
 }
 
 .cascading-selector-option {
-  line-height: 60px;
-  height: 60px;
+  line-height: $base-brick-height;
+  height: $base-brick-height;
   text-align: center;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -277,7 +283,7 @@ export default {
 }
 
 .outer-cascading-list {
-  height: 240px;
+  height: $base-brick-height * 7;
   width: 100px;
   overflow: hidden;
   position: relative;

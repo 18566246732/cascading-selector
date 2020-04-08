@@ -172,13 +172,13 @@ $casecading-selector-height: 30px;
     width: 100%;
     justify-content: space-around;
     position: relative;
-    height: 400px;
+    height: $base-brick-height * 7;
     overflow: hidden;
   }
   .casecading-selector-bg {
     position: absolute;
     top: 136px;
-    bottom: 196px;
+    height: $base-brick-height;
     z-index: -1;
     background: none;
     left: 0;
