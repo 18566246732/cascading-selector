@@ -5,10 +5,10 @@
       :show-value="showAddress"
     >
       <cascading-column
-        prop="province"
+        type="province"
       >
         <cascading-option
-          v-for="item in provinceList"
+          v-for="item in provinceArray"
           :key="item.id"
           :value="item"
         >
@@ -16,7 +16,7 @@
         </cascading-option>
       </cascading-column>
       <cascading-column
-        prop="city"
+        type="city"
       >
         <cascading-option
           v-for="item in address.province.cityArray"
@@ -27,7 +27,7 @@
         </cascading-option>
       </cascading-column>
       <cascading-column
-        prop="country"
+        type="country"
       >
         <cascading-option
           v-for="item in address.city.countryArray"
@@ -73,7 +73,7 @@ export default {
               id: '',
             }
         },
-        provinceList: []
+        provinceArray: []
       };
   },
   computed: {
@@ -85,7 +85,7 @@ export default {
       },
   },
   mounted() {
-    this.provinceList = areaData.provinces;
+    this.provinceArray = areaData.provinces;
   }
 };
 </script>
@@ -98,10 +98,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
-
-li {
-  list-style: none;
 }
 
 </style>

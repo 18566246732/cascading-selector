@@ -19,7 +19,7 @@
         },
         methods: {
           handleOptionClick() {
-            this.$parent.$emit('handleOptionClick', this.value);
+            this.$parent.$emit('optionClicked', this.value);
           }
         }
     };

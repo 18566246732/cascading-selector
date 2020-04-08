@@ -1,8 +1,4 @@
 <template>
-  <!-- <div
-    class="cascading-selector-column"
-    :style="{height: parentHeight+'px'}"
-  > -->
   <div
     class="cascading-selector-column"
   >
@@ -11,7 +7,7 @@
       :class="isMobile ? 'mobile' : ''"
     >
       <ul
-        :ref="prop"
+        :ref="type"
         class="inner-cascading-list"
         :style="style"
         @touchstart="handleColumnTouchStart"
@@ -23,7 +19,7 @@
         <!-- 使用空的option来保证可选项的位置 -->
         <li class="cascading-selector-option" />
         <li class="cascading-selector-option title">
-          {{ prop | translateToChinese }}
+          {{ type | translateToChinese }}
         </li>
         <slot />
         <li class="cascading-selector-option" />
@@ -40,18 +36,18 @@
 export default {
   name: "CascadingColumn",
   filters: {
-    translateToChinese(prop) {
+    translateToChinese(type) {
       const E2CMap = {
         province: "省",
         city: "市",
         country: "区/县"
       };
-      return E2CMap[prop];
+      return E2CMap[type];
     }
   },
-  // 接收prop数据，表示需要操作父组件中value对象上的某个指定数据
+  // 接收type数据，表示当前列的类型
   props: {
-    prop: {
+    type: {
       type: String,
       required: true
     }
@@ -70,7 +66,6 @@ export default {
       maxY: 0, // 滑动最大距离
       minY: 0, // 滑动最小距离
       optionHeight: 0, // 每一个选项的高度
-      parentHeight: 0, // 父容器的高度
       optionLength: 0, // 选项的长度
       preventFormat: false, // 阻止格式化距离
       isMobile: false, // 是否移动端
@@ -81,7 +76,7 @@ export default {
   computed: {
     // 得到父组件中，当前级联选择器所绑定的那一条数据
     propValue() {
-      return this.$parent.value[this.prop];
+      return this.$parent.value[this.type];
     }
   },
   watch: {
@@ -90,7 +85,7 @@ export default {
       // 当activeIndex发生变化，并且可以通过这个新的索引找到对应子组件时
       if (this.$children[newValue]) {
         this.resetActiveFlag(this.$children[newValue].value);
-        this.$parent.$emit( "changeSelected", this.prop, this.$children[newValue].value);
+        this.$parent.$emit( "changeSelected", this.type, this.$children[newValue].value);
       } else {
         // 重置(当清空按钮点击时，activeIndex变成-1)
         this.resetActiveFlag();
@@ -98,16 +93,14 @@ export default {
     },
     // 侦听当前级联选择器的数据
     propValue(newValue) {
-      // 当数据发生改变的时候，向外发布change事件，并将新的值发布在外
-      this.$emit("change", newValue);
       this.formatAddress();
     }
   },
   mounted() {
 
-    this.$on('handleOptionClick', (value) => {
+    this.$on('optionClicked', (value) => {
       this.resetActiveFlag(value);
-      this.$parent.$emit("changeSelected", this.prop, value);
+      this.$parent.$emit("changeSelected", this.type, value);
     });
 
     this.formatData();
@@ -141,9 +134,7 @@ export default {
       // 保存当前选项的长度
       this.optionLength = this.$children.length;
       // 保存当前option的高度
-      this.optionHeight = this.$refs[this.prop].children[0].offsetHeight;
-      // 为最外层的父元素设置高度，高度为option的5倍，即一次显示5个option
-      this.parentHeight = this.optionHeight * 5;
+      this.optionHeight = this.$refs[this.type].children[0].offsetHeight;
       // 保存滑动的最大高度
       this.maxY = -this.optionHeight * (this.optionLength - 1);
     },
@@ -153,7 +144,7 @@ export default {
       let children = this.$children;
       // 查询到当前组件中与外层传入的数据对应的子组件的索引值
       let index = children.findIndex(
-        item => item.value.id === this.$parent.value[this.prop].id
+        item => item.value.id === this.$parent.value[this.type].id
       );
       // 将索引值赋予activeIndex，如果能查找到对应的，说明外部传值了，
       // 就自动滑动到当前索引的位置，否则就显示请选择
@@ -166,7 +157,7 @@ export default {
         this.style.transform = `translate3d(0px, ${distance}px, 0px)`;
         return;
       }
-      this.$helper.scrollAnimation(this.$refs[this.prop], this.$refs[this.prop].scrollTop, this.optionHeight * (this.activeIndex + 1));
+      this.$helper.scrollAnimation(this.$refs[this.type], this.$refs[this.type].scrollTop, this.optionHeight * (this.activeIndex + 1));
     },
     // 触碰开始
     handleColumnTouchStart(e) {

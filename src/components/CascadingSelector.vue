@@ -132,6 +132,7 @@ $casecading-selector-height: 30px;
     background: #fff;
     background: none;
     border: 1px solid grey;
+    box-sizing: border-box;
   }
   .casecading-selector-layer {
     position: absolute;
